@@ -1,11 +1,13 @@
 ﻿using eTickets.Data.Cart;
 using eTickets.Repositores;
 using eTickets.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace eTickets.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly IOrderRepository orderRepository;

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace eTickets.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
     public class MovieController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
@@ -15,7 +16,7 @@ namespace eTickets.Controllers
         {
             this.unitOfWork = unitOfWork;
         }
-      //  [Authorize (Roles =UserRoles.User)] 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var movies = await unitOfWork.Movies.GetAllWithCinema();
@@ -37,7 +38,7 @@ namespace eTickets.Controllers
 
             return View("Index", allMovies);
         }
-
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var movieDetail = await unitOfWork.Movies.GetMovieByIdAsync(id);

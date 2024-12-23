@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace eTickets.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
     public class ActorController : Controller
     {
   
@@ -18,7 +19,7 @@ namespace eTickets.Controllers
             this.unitOfWork = unitOfWork;
         }
 
-        [Authorize(Roles = UserRoles.Admin)]
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var data = await unitOfWork.Actors.GetAll();
@@ -42,6 +43,7 @@ namespace eTickets.Controllers
 
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {

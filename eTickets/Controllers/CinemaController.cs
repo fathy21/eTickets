@@ -1,10 +1,12 @@
-﻿using eTickets.Models;
+﻿using eTickets.Data.Static;
+using eTickets.Models;
 using eTickets.Repositores;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eTickets.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
     public class CinemaController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
@@ -14,6 +16,7 @@ namespace eTickets.Controllers
 
             this.unitOfWork = unitOfWork;
         }
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var cinemas = await unitOfWork.Cinema.GetAll();
@@ -33,8 +36,8 @@ namespace eTickets.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       
-       
+
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var cinemaDetails = await unitOfWork.Cinema.GetById(id);
